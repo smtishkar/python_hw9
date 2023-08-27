@@ -19,7 +19,6 @@ def launch(func: Callable):
             for i in data:
                 line = ''.join(i).split(' ')
                 result = func(line)
-                print(result)
         return result
     return wrapper
 
@@ -30,12 +29,10 @@ def our_cash(func: Callable):
             data = json.load(f)
     except FileNotFoundError:
         data = {}
-
         def wrapper(*args):
             arg = str(args)
             result = func(*args)
             data.update({arg: result})
-
             with open(f'{func.__name__}.json', 'w') as f:
                 json.dump(data, f, indent=4)
 
@@ -58,7 +55,6 @@ def csv_create_file():
 @launch
 @our_cash
 def equation_solving(nums_list: list):
-    # a, b, c = nums_list[0], nums_list[1], nums_list[2]
     a = int(nums_list[0])
     b = int(nums_list[1])
     c = int(nums_list[2])
